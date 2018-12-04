@@ -53,6 +53,7 @@ resource "digitalocean_droplet" "elk" {
       # install logstash
       "wget --no-check-certificate https://artifacts.elastic.co/downloads/logstash/logstash-6.5.1.deb",
       "sudo dpkg -i logstash-6.5.1.deb",
+      "sudo wget -d --header='PRIVATE-TOKEN: zyzM96gpQVEV-sxi-sLX' https://gitlab.com/api/v4/projects/9724480/repository/files/res%2Flogstash%2Flogstash.conf/raw?ref=feature/elk -O /etc/logstash/conf.d/logstash.conf",
       "sudo /bin/systemctl daemon-reload",
       "sudo /bin/systemctl enable logstash.service",
       "sudo systemctl start logstash.service",
