@@ -5,6 +5,7 @@ resource "digitalocean_droplet" "elk" {
   size               = "4gb"
   private_networking = true
   backups            = true
+
   ssh_keys = [
     "${var.ssh_fingerprint}",
   ]
@@ -52,21 +53,21 @@ resource "digitalocean_droplet" "elk" {
 
       # install logstash
       "wget --no-check-certificate https://artifacts.elastic.co/downloads/logstash/logstash-6.5.1.deb",
+
       "sudo dpkg -i logstash-6.5.1.deb",
-      "sudo wget -d --header='PRIVATE-TOKEN: zyzM96gpQVEV-sxi-sLX' https://gitlab.com/api/v4/projects/9724480/repository/files/res%2Flogstash%2Flogstash.conf/raw?ref=feature/elk -O /etc/logstash/conf.d/logstash.conf",
+
+      # "sudo wget -d --header='PRIVATE-TOKEN: zyzM96gpQVEV-sxi-sLX' https://gitlab.com/api/v4/projects/9724480/repository/files/res%2Flogstash%2Flogstash.conf/raw?ref=feature/elk -O /etc/logstash/conf.d/logstash.conf",
       "sudo /bin/systemctl daemon-reload",
+
       "sudo /bin/systemctl enable logstash.service",
       "sudo systemctl start logstash.service",
 
       # install nginx
       "sudo apt-get update",
-      "sudo apt-get -y install nginx",
-      "sudo wget -d --header='PRIVATE-TOKEN: zyzM96gpQVEV-sxi-sLX' https://gitlab.com/api/v4/projects/9724480/repository/files/res%2Fnginx%2Fkibana/raw?ref=feature/elk -O /etc/nginx/sites-available/default",
-      "sudo systemctl restart nginx"
-    ]
-  }
-}
 
-output "ip" {
-  value = "${digitalocean_droplet.elk.ipv4_address}"
+      "sudo apt-get -y install nginx",
+    ]
+
+    # "sudo systemctl restart nginx",
+  }
 }
