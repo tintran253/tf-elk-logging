@@ -38,36 +38,21 @@ resource "digitalocean_droplet" "elk" {
       "wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.5.1.deb.sha512",
       "shasum -a 512 -c elasticsearch-6.5.1.deb.sha512",
       "sudo dpkg -i elasticsearch-6.5.1.deb",
-      "sudo /bin/systemctl daemon-reload",
-      "sudo /bin/systemctl enable elasticsearch.service",
-      "sudo systemctl start elasticsearch.service",
 
       # install kibana
       "wget https://artifacts.elastic.co/downloads/kibana/kibana-6.5.1-amd64.deb",
 
       "shasum -a 512 kibana-6.5.1-amd64.deb",
       "sudo dpkg -i kibana-6.5.1-amd64.deb",
-      "sudo /bin/systemctl daemon-reload",
-      "sudo /bin/systemctl enable kibana.service",
-      "sudo systemctl start kibana.service",
 
       # install logstash
       "wget --no-check-certificate https://artifacts.elastic.co/downloads/logstash/logstash-6.5.1.deb",
 
       "sudo dpkg -i logstash-6.5.1.deb",
 
-      # "sudo wget -d --header='PRIVATE-TOKEN: zyzM96gpQVEV-sxi-sLX' https://gitlab.com/api/v4/projects/9724480/repository/files/res%2Flogstash%2Flogstash.conf/raw?ref=feature/elk -O /etc/logstash/conf.d/logstash.conf",
-      "sudo /bin/systemctl daemon-reload",
-
-      "sudo /bin/systemctl enable logstash.service",
-      "sudo systemctl start logstash.service",
-
       # install nginx
       "sudo apt-get update",
-
       "sudo apt-get -y install nginx",
     ]
-
-    # "sudo systemctl restart nginx",
   }
 }
