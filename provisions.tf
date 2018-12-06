@@ -39,17 +39,27 @@ resource "null_resource" "elk" {
 
   provisioner "remote-exec" {
     inline = [
+      "sudo sed -i 's/:elasticsearch_port/${lookup(var.ports, "elasticsearch")}/g' /etc/elasticsearch/elasticsearch.yml",
+      "sudo sed -i 's/:kibana_port/${lookup(var.ports, "kibana")}/g' /etc/kibana/kibana.yml",
+      "sudo sed -i 's/:elasticsearch_port/${lookup(var.ports, "elasticsearch")}/g' /etc/kibana/kibana.yml",
+      "sudo sed -i 's/:logstash_beat_port/${lookup(var.ports, "logstash_beat_input")}/g' /etc/logstash/conf.d/logstash.conf",
+      "sudo sed -i 's/:logstash_http_port/${lookup(var.ports, "logstash_http_input")}/g' /etc/logstash/conf.d/logstash.conf",
+      "sudo sed -i 's/:elasticsearch_port/${lookup(var.ports, "elasticsearch")}/g' /etc/logstash/conf.d/logstash.conf",
+
       "sudo /bin/systemctl daemon-reload",
       "sudo /bin/systemctl enable elasticsearch.service",
       "sudo systemctl start elasticsearch.service",
+      "sudo systemctl restart elasticsearch.service",
       "sudo /bin/systemctl daemon-reload",
       "sudo /bin/systemctl enable kibana.service",
       "sudo systemctl start kibana.service",
+      "sudo systemctl restart kibana.service",
       "sudo /bin/systemctl daemon-reload",
       "sudo /bin/systemctl enable logstash.service",
       "sudo systemctl start logstash.service",
+      "sudo systemctl restart logstash.service",
 
-      # temporart disable nginx 
+      # temporary disable nginx 
       "sudo systemctl stop nginx",
     ]
   }

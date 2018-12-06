@@ -1,2 +1,9 @@
 do_token = ""
 ssh_fingerprint = ""
+
+ports = {
+  "elasticsearch"       = 9200
+  "kibana"              = 5601
+  "logstash_beat_input" = 5044
+  "logstash_http_input" = 3131
+}

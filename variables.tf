@@ -17,3 +17,7 @@ variable "elk_cfg" {
 variable "kibana_nginx" {
   default = "./res/nginx/kibana"
 }
+
+variable "ports" {
+  type = "map"
+}
