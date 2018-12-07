@@ -1,5 +1,6 @@
-do_token = ""
-ssh_fingerprint = ""
+do_token = "__"
+
+ssh_fingerprint = "__"
 
 ports = {
   "elasticsearch"       = 9200
@@ -7,3 +8,5 @@ ports = {
   "logstash_beat_input" = 5044
   "logstash_http_input" = 3131
 }
+
+slack_hook_url = "__"

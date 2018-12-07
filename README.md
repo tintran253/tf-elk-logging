@@ -1,21 +1,15 @@
 #tf & elk
 
-variables in provider
+- Setup terraform:
+  - [ ] [https://www.terraform.io/downloads.html](https://www.terraform.io/downloads.html)
+- Configurations & variables: 
+  - [ ] Create file `*.tfvars` following `/configs/__tfvars` template
 
 cmd:
-
  - [ ] terraform init
- - [ ] terraform plan
+ - [ ] terraform plan (options)
  - [ ] terraform apply
 
-current svs:
 
-`netstat -plnt`
-
-ufw disable firewall
-
-config logstash network
-
-config kibana network
-
-setup filebeat comment => uncomment config file
+ref:
+  - current svs: `netstat -plnt`
