@@ -111,3 +111,4 @@ elasticsearch.url: "http://localhost:${elasticsearch_port}"
 
 # Specifies locale to be used for all localizable strings, dates and number formats.
 #i18n.locale: "en"
+xpack.infra.sources.default.logAlias: 'logstash-*'
