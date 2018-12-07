@@ -11,41 +11,34 @@ resource "null_resource" "elk" {
 
   # put elastic config file
   provisioner "file" {
-    source      = "./configs/elastic/elasticsearch.yml"
+    content     = "${data.template_file.elastic_yml.rendered}"
     destination = "/etc/elasticsearch/elasticsearch.yml"
   }
 
   # put kibana config file
   provisioner "file" {
-    source      = "./configs/kibana/kibana.yml"
+    content     = "${data.template_file.kibana_yml.rendered}"
     destination = "/etc/kibana/kibana.yml"
   }
 
   # put logstash config file
   provisioner "file" {
-    source      = "./configs/logstash/logstash.yml"
+    content     = "${data.template_file.logstash_yml.rendered}"
     destination = "/etc/logstash/logstash.yml"
   }
 
   provisioner "file" {
-    source      = "./configs/logstash/logstash.conf"
+    content     = "${data.template_file.logstash_conf.rendered}"
     destination = "/etc/logstash/conf.d/logstash.conf"
   }
 
   provisioner "file" {
-    source      = "./configs/nginx/default"
+    content     = "${data.template_file.nginx.rendered}"
     destination = "/etc/nginx/sites-available/default"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "sudo sed -i 's/:elasticsearch_port/${lookup(var.ports, "elasticsearch")}/g' /etc/elasticsearch/elasticsearch.yml",
-      "sudo sed -i 's/:kibana_port/${lookup(var.ports, "kibana")}/g' /etc/kibana/kibana.yml",
-      "sudo sed -i 's/:elasticsearch_port/${lookup(var.ports, "elasticsearch")}/g' /etc/kibana/kibana.yml",
-      "sudo sed -i 's/:logstash_beat_port/${lookup(var.ports, "logstash_beat_input")}/g' /etc/logstash/conf.d/logstash.conf",
-      "sudo sed -i 's/:logstash_http_port/${lookup(var.ports, "logstash_http_input")}/g' /etc/logstash/conf.d/logstash.conf",
-      "sudo sed -i 's/:elasticsearch_port/${lookup(var.ports, "elasticsearch")}/g' /etc/logstash/conf.d/logstash.conf",
-
       "sudo /bin/systemctl daemon-reload",
       "sudo /bin/systemctl enable elasticsearch.service",
       "sudo systemctl start elasticsearch.service",
@@ -59,7 +52,7 @@ resource "null_resource" "elk" {
       "sudo systemctl start logstash.service",
       "sudo systemctl restart logstash.service",
 
-      # temporary disable nginx 
+      # temporary disable nginx
       "sudo systemctl stop nginx",
     ]
   }
