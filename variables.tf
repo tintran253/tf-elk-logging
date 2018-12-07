@@ -17,11 +17,16 @@ variable "ports" {
   }
 }
 
+variable "slack_hook_url" {
+  default = ""
+}
+
 data "template_file" "elastic_yml" {
   template = "${file("./configs/elastic/elasticsearch.yml")}"
 
   vars {
     elasticsearch_port = "${lookup(var.ports,"elasticsearch")}"
+    slack_hook_url     = "${var.slack_hook_url}"
   }
 }
 

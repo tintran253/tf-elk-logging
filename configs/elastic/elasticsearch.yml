@@ -86,3 +86,5 @@ http.port: ${elasticsearch_port}
 # Require explicit names when deleting indices:
 #
 #action.destructive_requires_name: true
+
+xpack.notification.slack.account.monitoring.url: ${slack_hook_url}
